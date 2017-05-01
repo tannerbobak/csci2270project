@@ -25,8 +25,11 @@ hashTable::~hashTable()
 int hashTable::hash(string name)
 {
 	int sum = 0;
-	for (int x = 1; x < name.size(); x++)
+	for (int x = 0; x < name.size(); x++)
+	{
+		//cout << name[x] << endl;
 		sum += name[x];
+	}
 	sum = sum%tableSize;
 	return sum;
 }
@@ -37,6 +40,8 @@ void hashTable::addressingAdd(string filename)
 {
 	ifstream reader;
 	reader.open (filename.c_str());
+	int collisionCount = 0;
+	int searchCount = 0;
 
 	if (reader.fail())          //tests to make sure connection was successful
     {
@@ -49,7 +54,7 @@ void hashTable::addressingAdd(string filename)
     getline (reader, templine);	//will be descriptions of categories
     while (getline (reader, templine))	//will loop for every line in the file.
     {
-    	
+    	cout << "reading in a line" << endl;
     	//get in all data from file
     	istringstream iss(templine);
     	string temp, team, league, first, last, birthcountry, throws, bats;
@@ -102,23 +107,40 @@ void hashTable::addressingAdd(string filename)
     	data += league;
     	data += ",";
     	data += salary;
+
+    	cout << "player created" << endl;
+    	cout << "table size: " << tableSize << endl;
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
 
-    	player *current;
-    	current = table[hashcode];
-    	if (current->next == NULL)	//nothing in spot
+    	cout << "hashed" << endl;
+    	cout << hashcode << endl;
+
+    	if (table[hashcode] == nullptr)	//nothing in spot
     	{
-    		current->next = person;
-    		person->previous = current;
+    		cout << "no collision" << endl;
+    		table[hashcode] = person;
     	}
     	else	//spot already taken, will have to find next open spot
     	{
+    		cout << "collision" << endl;
+    		collisionCount++;
     		bool isFound = false;
-    		int current = hashcode + 1;
-    		while (table[current]->next != NULL) //until we traverse to an open spot...
+    		int current;
+    		if (hashcode != tableSize - 1)
     		{
+    			int current = hashcode + 1;
+    		}
+    		else
+    			current = 0;
+
+    		while (table[current] != nullptr) //until we traverse to an open spot...
+    		{
+    			//cout << "traversing" << endl;
+    			cout << current << endl;
+    			searchCount++;
+
     			if (table[current]->key == person->key && table[current]->yearBorn == person->yearBorn && table[current]->countryBorn == person->countryBorn) //if duplicate found
     			{
     				cout << "duplicate";
@@ -129,6 +151,7 @@ void hashTable::addressingAdd(string filename)
 
     			if (current = tableSize - 1)	//last node in table
     			{
+    				//cout << "this" << endl;
     				current = 0;	//go back to top of array
     			}
     			else if (current = hashcode)	//table is full
@@ -151,6 +174,10 @@ void hashTable::addressingAdd(string filename)
     		}
     	}
     }
+
+    cout << "Collisions using open addressing: " << collisionCount << endl;
+    cout << "Search operations using open addressing: " << searchCount << endl;
+
 }
 
 //TODO: Test this
@@ -159,6 +186,8 @@ void hashTable::chainingAdd (string filename)
 {
 	ifstream reader;
 	reader.open (filename.c_str());
+	int collisionCount = 0;
+	int searchCount = 0;
 
 	if (reader.fail())    //tests to make sure connection was successful
     {
@@ -229,23 +258,26 @@ void hashTable::chainingAdd (string filename)
     	int hashcode = hash(person->key);
 
     	player *current = table[hashcode];
-    	if (current->next == NULL)	//nothing in spot
+    	if (current->next == nullptr)	//nothing in spot
     	{
     		current->next = person;
     		person->previous = current;
     	}
     	else	//spot already taken, will have to chain
     	{
+    		collisionCount++;
     		bool isFound = false;
 
     		current = current->next;	//Search through chain to make sure the player isn't already in the table.
-    		while (current != NULL)
+    		while (current != nullptr)
     		{
+    			searchCount++;
     			if (current->key == person->key && current->yearBorn == person->yearBorn && current->countryBorn == person->countryBorn) //if they're the same
     			{
     				cout << "duplicate";
     				current->info.push_back(data);	//add record of player's year
     				isFound = true;
+    				break;
     			}
     			current = current->next;
     		}
@@ -255,6 +287,7 @@ void hashTable::chainingAdd (string filename)
     		current = table[hashcode]->next;	//reset pointer
     		if (person->key > current->key && !isFound) //if player is alphabetically higher than the first node in the chain
     		{
+    			searchCount++;
     			table[hashcode]->next->previous = person;
     			person->next = table[hashcode]->next;
     			person->previous = table[hashcode];
@@ -263,8 +296,9 @@ void hashTable::chainingAdd (string filename)
     		}
     		else
     		{
-	    		while (current->next != NULL)	//until the last node in the chain
+	    		while (current->next != nullptr)	//until the last node in the chain
 	    		{
+	    			searchCount++;
 	    			if (person->key > current->next->key) //if player should be inserted between the current node and the next node
 	    			{
 	    				current->next->previous = person;
@@ -272,21 +306,25 @@ void hashTable::chainingAdd (string filename)
 		    			person->previous = current;
 		    			table[hashcode]->next = person;
 		    			isFound = true;
+		    			break;
 	    			}
+
+	    			current = current->next;
 	    		}
 
 	    		//player should be added after last node in the chain
 				if (!isFound)
 				{
 					current->next = person;
-					person->next = NULL;
+					person->next = nullptr;
 					person->previous = current;
 				}
     		}
     		
     	}
     }
-
+    cout << "Collisions using chaining: " << collisionCount << endl;
+    cout << "Search operations using chaining: " << searchCount << endl;
     reader.close();
 }
 

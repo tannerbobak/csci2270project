@@ -23,24 +23,24 @@ struct player 	//holds all data for each player
 	std::vector <std::string> info;	//will hold strings of year, league, team, salary.
 	player ()
 	{
-		next = NULL;
-		previous = NULL;
+		next = nullptr;
+		previous = nullptr;
 	}
 	player (std::string f, std::string l, std::string cB, int y, int w, int h, std::string b, std::string t)
 	{
 		first = f;
 		last = l;
 		key = "";
-		key+= last;
 		key+= first;
+		key+= last;
 		countryBorn = cB;
 		yearBorn = y;
 		weight = w;
 		height = h;
 		bats = b;
 		throws = t;
-		next = NULL;
-		previous = NULL;
+		next = nullptr;
+		previous = nullptr;
 	}
 };
 
@@ -64,5 +64,4 @@ class hashTable
 		player ** table;
 };
 
-//#include "hashtables.cpp" //was having trouble making this work
 #endif // HASHTABLES_H
