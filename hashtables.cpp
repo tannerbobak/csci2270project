@@ -22,6 +22,15 @@ hashTable::~hashTable()
 	delete table;
 }
 
+int hashTable::hash(string name)
+{
+	int sum = 0;
+	for (int x = 1; x < name.size(); x++)
+		sum += name[x];
+	sum = sum%tableSize;
+	return sum;
+}
+
 //TODO: test this 
 //TODO: add counters, output statements
 void hashTable::addressingAdd(string filename)

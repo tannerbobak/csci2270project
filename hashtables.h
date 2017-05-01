@@ -44,6 +44,10 @@ struct player 	//holds all data for each player
 	}
 };
 
+/*I thought it would be easier to create one class that can run both 
+addressing and chaining algorithms (we would only call one kind or the 
+other for any given instance of the class), but if you think it would be
+better to create two separate classes we can make that work too*/
 class hashTable
 {
 	public:
@@ -60,5 +64,5 @@ class hashTable
 		player ** table;
 };
 
-//#include "hashtables.cpp"
+//#include "hashtables.cpp" //was having trouble making this work
 #endif // HASHTABLES_H
