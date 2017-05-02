@@ -1,12 +1,13 @@
-//Lillie Bahrami
-//TA: Camilla Lambrocco
-//CSCI 2270
+/*
+ * Lillie Bahrami, Tanner Bobak
+ * TAs: Camilla Lambrocco, Tanner Bobak
+ * CSCI 2270
+ */
 
-//#include "hashtables.h"
+#include "hashtable.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
-
 
 int main (int argc, char* argv[])
 {
@@ -41,9 +42,9 @@ int main (int argc, char* argv[])
             	cin.ignore();
                 std::cout << "Enter a player:" << std::endl;
                 getline (std::cin, playerName);
-                bool found = chainingSearch(playerName);
+                bool found = chaining.chainingSearch(playerName);
                 if (found)
-                	addressingSearch(playerName);
+                	addressing.addressingSearch(playerName);
                 break;
             case 2: 
                 answer = 2;
