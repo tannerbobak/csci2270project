@@ -364,6 +364,7 @@ void hashTable::addressingSearch ( std::string key )
 
 		if(p->key == searchKey)
 		{
+			printPlayerInfo(p);
 			found = true;
 		}
 		else
@@ -380,7 +381,6 @@ void hashTable::addressingSearch ( std::string key )
 
 	if(found)
 	{
-		printPlayerInfo(t);
 		cout << "Search operations using open addressing: " << collisions << endl;
 	}
 	else
@@ -398,8 +398,8 @@ bool hashTable::chainingSearch ( std::string key )
 	string searchKey = getSearchKey(key);
 
 	// Search the table
-	int hash = hash(searchKey);
-	player* t = table[hash];
+	int hashcode = hash(searchKey);
+	player* t = table[hashcode];
 	bool found = false;
 	while(!found)
 	{
@@ -409,6 +409,7 @@ bool hashTable::chainingSearch ( std::string key )
 		if(t->key == searchKey)
 		{
 			found = true;
+			printPlayerInfo(t);
 		}
 		else
 		{
@@ -419,7 +420,6 @@ bool hashTable::chainingSearch ( std::string key )
 
 	if(found)
 	{
-		printPlayerInfo(t);
 		cout << "Search operations using chaining: " << collisions << endl;
 	}
 	else
@@ -434,13 +434,11 @@ std::string hashTable::getSearchKey(std::string key)
 	string first, last, searchKey;
 	getline(stream, first, ' ');
 	getline(stream, last);
-	stream = "";
-	stream << first << last;
-	stream >> searchKey;
+	searchKey = last + first;
 	return searchKey;
 }
 
 void hashTable::printPlayerInfo(player* p)
 {
-
+	// TODO
 }
