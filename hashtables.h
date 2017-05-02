@@ -1,7 +1,7 @@
 /*
  * Lillie Bahrami, Tanner Bobak
  * TAs: Camilla Lambrocco, Sunil
- * CSCI 2270
+ * CSCI 2270 Project
  */
 
 #ifndef HASHTABLES_H
@@ -9,21 +9,24 @@
 #include <vector>
 #include <string>
 
-struct player 	//holds all data for each player
+// Struct for holding player data for both chaining and addressing tables.
+struct player
 {
-	std::string key;
+	// Basic player data retrieved from file.
+	std::string key; 							// Key used in the table.
+	int yearBorn; 								// Year that the player was born.
+	std::string countryBorn; 					// Country that the player was born in.
+	std::string first; 							// First Name
+	std::string last;							// Last Name
+	int weight;									// Player's weight
+	int height;									// Player's height
+	std::string bats;							// Batting handedness of the player
+	std::string throws;							// Throwing handedness of the player
+	std::vector <std::string> info;				// This will hold strings with data on year, league, team, and salary.
+
+	// Variables used for chaining only.
 	player *next;
 	player *previous;
-
-	int yearBorn;
-	std::string countryBorn;
-	std::string first;	//first name
-	std::string last;	//last name
-	int weight;
-	int height;
-	std::string bats;
-	std::string throws;
-	std::vector <std::string> info;	//will hold strings of year, league, team, salary.
 
 	player ()
 	{
@@ -47,10 +50,12 @@ struct player 	//holds all data for each player
 	}
 };
 
-/*I thought it would be easier to create one class that can run both 
-addressing and chaining algorithms (we would only call one kind or the 
-other for any given instance of the class), but if you think it would be
-better to create two separate classes we can make that work too*/
+/*
+ * I thought it would be easier to create one class that can run both
+ * addressing and chaining algorithms (we would only call one kind or the
+ * other for any given instance of the class), but if you think it would be
+ * better to create two separate classes we can make that work too
+ */
 class hashTable
 {
 
