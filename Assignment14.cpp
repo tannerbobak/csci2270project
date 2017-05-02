@@ -24,7 +24,7 @@ int main (int argc, char* argv[])
 	hashTable chaining(tableSize);
 
 	cout << "Hash table size: " << tableSize << endl;
-	addressing.addressingAdd(filename);
+	chaining.chainingAdd(filename);
 	//chaining.chainingAdd(filename);
 
 	/*int answer = 0;

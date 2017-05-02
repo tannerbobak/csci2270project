@@ -256,20 +256,23 @@ void hashTable::chainingAdd (string filename)
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
+    	cout << "hash is: " << hashcode << endl;
 
     	player *current = table[hashcode];
-    	if (current->next == nullptr)	//nothing in spot
+    	if (current == nullptr)	//nothing in spot
     	{
-    		current->next = person;
-    		person->previous = current;
+    		cout << "no collision" << endl;
+    		table[hashcode] = person;
     	}
-    	else	//spot already taken, will have to chain
+    	else	//at least one node in spot, will have to chain
     	{
+    		cout << "collision" << endl;
     		collisionCount++;
     		bool isFound = false;
 
-    		current = current->next;	//Search through chain to make sure the player isn't already in the table.
-    		while (current != nullptr)
+    		//Search through chain to make sure the player isn't already in the table.
+    		searchCount++;
+    		while (current->next != nullptr)
     		{
     			searchCount++;
     			if (current->key == person->key && current->yearBorn == person->yearBorn && current->countryBorn == person->countryBorn) //if they're the same
@@ -282,7 +285,16 @@ void hashTable::chainingAdd (string filename)
     			current = current->next;
     		}
 
-    		//If the player isn't already in the chain, add them alphabetically
+    		//If the player isn't already in the chain, add them to the end
+    		if (!isFound)
+    		{
+    			person->info.push_back(data);
+    			current->next = person;
+    			person->previous = current;
+    		}
+
+
+    		/*
     		person->info.push_back(data);
     		current = table[hashcode]->next;	//reset pointer
     		if (person->key > current->key && !isFound) //if player is alphabetically higher than the first node in the chain
@@ -319,8 +331,7 @@ void hashTable::chainingAdd (string filename)
 					person->next = nullptr;
 					person->previous = current;
 				}
-    		}
-    		
+    		}*/
     	}
     }
     cout << "Collisions using chaining: " << collisionCount << endl;
