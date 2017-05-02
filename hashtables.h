@@ -35,8 +35,8 @@ struct player 	//holds all data for each player
 		first = f;
 		last = l;
 		key = "";
-		key+= last;
 		key+= first;
+		key+= last;
 		countryBorn = cB;
 		yearBorn = y;
 		weight = w;
@@ -48,6 +48,10 @@ struct player 	//holds all data for each player
 	}
 };
 
+/*I thought it would be easier to create one class that can run both 
+addressing and chaining algorithms (we would only call one kind or the 
+other for any given instance of the class), but if you think it would be
+better to create two separate classes we can make that work too*/
 class hashTable
 {
 

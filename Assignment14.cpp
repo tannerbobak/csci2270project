@@ -7,6 +7,7 @@
 #include "hashtable.h"
 #include <iostream>
 #include <sstream>
+#include "hashtables.h"
 using namespace std;
 
 int main (int argc, char* argv[])
@@ -20,13 +21,14 @@ int main (int argc, char* argv[])
 	stringstream(tSize)>>tableSize;
 	cout << tableSize << endl;
 
-	hashTable addressing (tableSize);
-	hashTable chaining (tableSize);
+	hashTable addressing(tableSize);
+	hashTable chaining(tableSize);
 
-	addressing.addressingAdd(filename);
+	cout << "Hash table size: " << tableSize << endl;
 	chaining.chainingAdd(filename);
+	//chaining.chainingAdd(filename);
 
-	int answer = 0;
+	/*int answer = 0;
 	string playerName;
 
 	while (answer != 2)
@@ -50,7 +52,7 @@ int main (int argc, char* argv[])
                 answer = 2;
                 break;
         }
-    }
+    }*/
 
     return 0;
 }
