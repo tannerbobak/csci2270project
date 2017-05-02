@@ -1,0 +1,9 @@
+yearID,teamID,leagueID,playerID,salary,firstName,lastName,birthYear,birthCountry,weight,height,bats,throws
+1985,ATL,NL,barkele01,870000,Len,Barker,1955,USA,225,77,R,R
+1985,ATL,NL,bedrost01,550000,Steve,Bedrosian,1957,USA,200,75,R,R
+1985,ATL,NL,benedbr01,545000,Bruce,Benedict,1955,USA,175,73,R,R
+1985,ATL,NL,campri01,633333,Rick,Camp,1953,USA,195,73,R,R
+1985,ATL,NL,ceronri01,625000,Rick,Cerone,1954,USA,192,71,R,R
+1985,ATL,NL,barkele01,870000,Len,Barker,1955,USA,225,77,R,R
+1985,ATL,NL,bedrost01,550000,Steve,Bedrosian,1957,USA,200,75,R,R
+1985,ATL,NL,benedbr01,545000,Bruce,Benedict,1955,USA,175,73,R,R
