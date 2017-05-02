@@ -441,4 +441,15 @@ std::string hashTable::getSearchKey(std::string key)
 void hashTable::printPlayerInfo(player* p)
 {
 	// TODO
+	cout << "First name: " << p->first << endl;
+	cout << "Last name: " << p->last << endl;
+	cout << "Year born: " << p->yearBorn << endl;
+	cout << "Country born: " << p->countryBorn << endl;
+	cout << "Weight: " << p->weight << endl;
+	cout << "Height: " << p->height << endl;
+	cout << "Bats: " << p->bats << endl;
+	cout << "Throws: " << p->throws << endl;
+	cout << "Teams and salary:" << endl;
+	for(unsigned int i = 0; i < p->info.size(); ++i)
+		cout << p->info[i] << endl;
 }
