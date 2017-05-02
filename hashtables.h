@@ -68,6 +68,7 @@ class hashTable
 		player ** table;
 		std::string getSearchKey(std::string key);
 		void printPlayerInfo(player* p);
+		std::string generateInfoString(int year, std::string team, std::string league, int salary);
 
 };
 
