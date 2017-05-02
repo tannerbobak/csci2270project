@@ -54,7 +54,7 @@ void hashTable::addressingAdd(string filename)
     getline (reader, templine);	//will be descriptions of categories
     while (getline (reader, templine))	//will loop for every line in the file.
     {
-    	cout << "reading in a line" << endl;
+    	//cout << "reading in a line" << endl;
     	//get in all data from file
     	istringstream iss(templine);
     	string temp, team, league, first, last, birthcountry, throws, bats;
@@ -99,65 +99,52 @@ void hashTable::addressingAdd(string filename)
     	player * person = new player(first, last, birthcountry, birthyear, weight, height, bats, throws);
 
     	//making a string of information to be added to the player's info vector
-    	string data = "";
-    	data += year;
-    	data += ",";
-    	data += team;
-    	data += ",";
-    	data += league;
-    	data += ",";
-    	data += salary;
+    	string data = generateInfoString(year, team, league, salary);
 
-    	cout << "player created" << endl;
-    	cout << "table size: " << tableSize << endl;
+    	//cout << "player created: " << person->first << "," << person->last << endl;
+    	//cout << "table size: " << tableSize << endl;
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
 
-    	cout << "hashed" << endl;
-    	cout << hashcode << endl;
+    	//cout << "hashed" << endl;
+    	//cout << hashcode << endl;
 
     	if (table[hashcode] == nullptr)	//nothing in spot
     	{
-    		cout << "no collision" << endl;
+    		//cout << "no collision" << endl;
     		table[hashcode] = person;
     	}
     	else	//spot already taken, will have to find next open spot
     	{
-    		cout << "collision" << endl;
+    		//cout << "collision" << endl;
     		collisionCount++;
     		bool isFound = false;
-    		int current;
-    		if (hashcode != tableSize - 1)
-    		{
-    			int current = hashcode + 1;
-    		}
-    		else
-    			current = 0;
+    		int current = hashcode;
 
     		while (table[current] != nullptr) //until we traverse to an open spot...
     		{
     			//cout << "traversing" << endl;
-    			cout << current << endl;
+    			//cout << current << endl;
     			searchCount++;
 
-    			if (table[current]->key == person->key && table[current]->yearBorn == person->yearBorn && table[current]->countryBorn == person->countryBorn) //if duplicate found
+    			if (table[current]->key == person->key && table[current]->yearBorn == person->yearBorn &&
+    					table[current]->countryBorn == person->countryBorn && table[current]->weight == person->weight) //if duplicate found
     			{
-    				cout << "duplicate";
-    				table[current]->next->info.push_back(data);	//add record of player's year
+    				//cout << "duplicate";
+    				table[current]->info.push_back(data);	//add record of player's year
     				isFound = true;
     				break;
     			}
 
-    			if (current = tableSize - 1)	//last node in table
+    			if (current == tableSize - 1)	//last node in table
     			{
     				//cout << "this" << endl;
     				current = 0;	//go back to top of array
     			}
-    			else if (current = hashcode)	//table is full
+    			else if (current == hashcode - 1)	//table is full
     			{
     				cout << "Table is full" << endl;
-    				isFound = true;
     				break;
     			}
     			else
@@ -168,10 +155,7 @@ void hashTable::addressingAdd(string filename)
 
     		//open spot found: add node to table
     		if (!isFound)
-    		{
-    			table[current]->next = person;
-    			person->previous = table[current]->next;
-    		}
+    			table[current] = person;
     	}
     }
 
@@ -245,14 +229,7 @@ void hashTable::chainingAdd (string filename)
     	player * person = new player(first, last, birthcountry, birthyear, weight, height, bats, throws);
 
     	//making a string of information to be added to the player's info vector
-    	string data = "";
-    	data += year;
-    	data += ",";
-    	data += team;
-    	data += ",";
-    	data += league;
-    	data += ",";
-    	data += salary;
+    	string data = generateInfoString(year, team, league, salary);
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
