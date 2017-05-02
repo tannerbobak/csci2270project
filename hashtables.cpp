@@ -200,7 +200,7 @@ void hashTable::chainingAdd (string filename)
     while (getline (reader, templine))	//will loop for every line in the file.
     {
     	
-    	//get in all data from file
+        //get in all data from file
     	istringstream iss(templine);
     	string temp, team, league, first, last, birthcountry, throws, bats, sal;
     	int year, salary, birthyear, weight, height;
@@ -300,91 +300,98 @@ void hashTable::chainingAdd (string filename)
     reader.close();
 }
 
-void hashTable::addressingSearch ( std::string key )
+/*This function takes in the name of a player and searches through a hash
+table set up using addressing methods to locate the player's data, if they exist.
+*/
+void hashTable::addressingSearch (std::string key)
 {
-
-	int collisions = 0;
+	int searchOps = 0; //counts number of searching operations
 
 	// Convert key (format: "firstname lastname") to a key (format: "firstnamelastname")
 	string searchKey = getSearchKey(key);
-
-	int initialIdx = hash(searchKey);
-	int i = initialIdx;
+	
+    int initialIdx = hash(searchKey);   //generate hashcode as index of array where search will begin
+	int i = initialIdx;    //will be used to navigate through the array
 	bool found = false;
-	player* p = table[i];
-	while(!found)
+	player* p = table[i];  //pointer to player at beginning index of search
+	
+    while(!found)
 	{
-		if(p == nullptr) // hole
+		if(p == nullptr) //no player registered at index, meaning no player w/ hashcode of initialIdx could have been placed there
 			break;
 
-		if(p->key == searchKey)
+		if(p->key == searchKey)   //player found
 		{
 			printPlayerInfo(p);
 			found = true;
 		}
 		else
 		{
-			++i;
-			++collisions;
+			++i; //move to next index of array, constituting one search operation
+			++searchOps; 
 
-			if(i == tableSize) i = 0; // Loop back to beginning
-			if(i == initialIdx - 1) break; // Looped around the entire table
+			if(i == tableSize) i = 0; // Loop back to start of array
+			if(i == initialIdx - 1) break; // Entire table has been searched
 
-			p = table[i];
+			p = table[i];    //reset pointer
 		}
 	}
 
 	if(found)
 	{
-		cout << "Search operations using open addressing: " << collisions << endl;
+		cout << "Search operations using open addressing: " << searchOps << endl;
 	}
 	else
 		cout << "Player not found." << endl;
-
 }
 
-bool hashTable::chainingSearch ( std::string key )
+/*This function takes in the name of a player and searches through a hash
+table set up using chaining methods to locate the player's data, if they exist.
+It returns a bool representing whether the player was found, so that if the
+player was not found the addressing search method will not be performed.*/
+bool hashTable::chainingSearch (std::string key)
 {
 
-	// Track number of collisions.
-	int collisions = 0;
+	// Track number of searching operations.
+	int searchOps = 0;
 
 	// Convert key (format: "firstname lastname") to a key (format: "firstnamelastname")
 	string searchKey = getSearchKey(key);
-    cout << searchKey << endl;
 
 	// Search the table
-	int hashcode = hash(searchKey);
-    cout << hashcode << endl;
-	player* t = table[hashcode];
+	int hashcode = hash(searchKey);    //generate hash
+	player* t = table[hashcode];   
 	bool found = false;
+
 	while(!found)
 	{
-		if(t == nullptr)
+		if(t == nullptr)  //nothing has been stored at the designated index, or reached end of linked list
 			break;
 
-		if(t->key == searchKey)
+		if(t->key == searchKey)   //player located
 		{
 			found = true;
 			printPlayerInfo(t);
 		}
 		else
 		{
-			t = t->next;
-			++collisions;
+			t = t->next; //move along linked list (constitutes one search operation)
+			++searchOps;
 		}
 	}
 
 	if(found)
 	{
-		cout << "Search operations using chaining: " << collisions << endl;
+		cout << "Search operations using chaining: " << searchOps << endl;
 	}
 	else
 		cout << "Player not found." << endl;
 
-	return found;
+	return found;  
 }
 
+/*This function takes a key in the format "firstname lastname"
+and changes it into the format "firstnamelastname" using getline.*/
 std::string hashTable::getSearchKey(std::string key)
 {
 	istringstream stream(key);
@@ -395,6 +402,7 @@ std::string hashTable::getSearchKey(std::string key)
 	return searchKey;
 }
 
+/*This function takes in a pointer to a player and outputs the information for that player*/
 void hashTable::printPlayerInfo(player* p)
 {
 	cout << "First name: " << p->first << endl;
@@ -406,6 +414,6 @@ void hashTable::printPlayerInfo(player* p)
 	cout << "Bats: " << p->bats << endl;
 	cout << "Throws: " << p->throws << endl;
 	cout << "Teams and salary:" << endl;
-	for(unsigned int i = 0; i < p->info.size(); ++i)
+	for(unsigned int i = 0; i < p->info.size(); ++i)   //if player participated in multiple years, they will have multiple information strings stored
 		cout << p->info[i] << endl;
 }
