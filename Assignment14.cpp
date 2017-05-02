@@ -26,7 +26,7 @@ int main (int argc, char* argv[])
 
 	cout << "Hash table size: " << tableSize << endl;
 	chaining.chainingAdd(filename);
-	chaining.chainingSearch("Jerry Koosman");
+	chaining.chainingSearch("Len Barker");
 	//chaining.chainingAdd(filename);
 
 	/*int answer = 0;

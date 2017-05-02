@@ -248,14 +248,6 @@ void hashTable::chainingAdd (string filename)
 
         cout << person->key << endl;
         string data = year + " " + team + " " + league + " " + sal;
-    	/*data += year;
-    	data += ",";
-    	data += team;
-    	data += ",";
-    	data += league;
-    	data += ",";
-        
-    	data += salary;*/
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
@@ -360,6 +352,7 @@ bool hashTable::chainingSearch (std::string key)
 
 	// Search the table
 	int hashcode = hash(searchKey);    //generate hash
+    cout << hashcode << endl;
 	player* t = table[hashcode];   
 	bool found = false;
 
