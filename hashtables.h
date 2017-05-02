@@ -1,6 +1,6 @@
 /*
  * Lillie Bahrami, Tanner Bobak
- * TAs: Camilla Lambrocco, Tanner Bobak
+ * TAs: Camilla Lambrocco, Sunil
  * CSCI 2270
  */
 
@@ -35,8 +35,7 @@ struct player 	//holds all data for each player
 		first = f;
 		last = l;
 		key = "";
-		key+= first;
-		key+= last;
+		key = first + last;
 		countryBorn = cB;
 		yearBorn = y;
 		weight = w;

@@ -1,6 +1,6 @@
 /*
  * Lillie Bahrami, Tanner Bobak
- * TAs: Camilla Lambrocco, Tanner Bobak
+ * TAs: Camilla Lambrocco, Sunil
  * CSCI 2270
  */
 
@@ -26,6 +26,7 @@ int main (int argc, char* argv[])
 
 	cout << "Hash table size: " << tableSize << endl;
 	chaining.chainingAdd(filename);
+	chaining.chainingSearch("Jerry Koosman");
 	//chaining.chainingAdd(filename);
 
 	/*int answer = 0;

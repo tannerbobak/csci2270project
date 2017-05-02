@@ -1,6 +1,6 @@
 /*
  * Lillie Bahrami, Tanner Bobak
- * TAs: Camilla Lambrocco, Tanner Bobak
+ * TAs: Camilla Lambrocco, Sunil 
  * CSCI 2270
  */
 
@@ -18,7 +18,7 @@ hashTable::hashTable(int size)
 	tableSize = size;
 }
 
-//TODO: check this
+
 hashTable::~hashTable()
 {
 	delete[] table;
@@ -180,8 +180,7 @@ void hashTable::addressingAdd(string filename)
 
 }
 
-//TODO: Test this
-//TODO: Counters and output statements.
+
 void hashTable::chainingAdd (string filename)
 {
 	ifstream reader;
@@ -203,7 +202,7 @@ void hashTable::chainingAdd (string filename)
     	
     	//get in all data from file
     	istringstream iss(templine);
-    	string temp, team, league, first, last, birthcountry, throws, bats;
+    	string temp, team, league, first, last, birthcountry, throws, bats, sal;
     	int year, salary, birthyear, weight, height;
     	getline (iss, temp, ',');
     	stringstream(temp)>>year;
@@ -216,6 +215,7 @@ void hashTable::chainingAdd (string filename)
     	getline (iss, temp, ',');	//playerID
     	//int salary;
     	getline (iss, temp, ',');
+        sal = temp;
     	stringstream(temp)>>salary;
     	//string first;
     	getline (iss, temp, ',');
@@ -245,28 +245,29 @@ void hashTable::chainingAdd (string filename)
     	player * person = new player(first, last, birthcountry, birthyear, weight, height, bats, throws);
 
     	//making a string of information to be added to the player's info vector
-    	string data = "";
-    	data += year;
+
+        cout << person->key << endl;
+        string data = year + " " + team + " " + league + " " + sal;
+    	/*data += year;
     	data += ",";
     	data += team;
     	data += ",";
     	data += league;
     	data += ",";
-    	data += salary;
+        
+    	data += salary;*/
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
-    	cout << "hash is: " << hashcode << endl;
+        cout << hashcode << endl;
 
     	player *current = table[hashcode];
     	if (current == nullptr)	//nothing in spot
     	{
-    		cout << "no collision" << endl;
     		table[hashcode] = person;
     	}
     	else	//at least one node in spot, will have to chain
     	{
-    		cout << "collision" << endl;
     		collisionCount++;
     		bool isFound = false;
 
@@ -277,7 +278,6 @@ void hashTable::chainingAdd (string filename)
     			searchCount++;
     			if (current->key == person->key && current->yearBorn == person->yearBorn && current->countryBorn == person->countryBorn) //if they're the same
     			{
-    				cout << "duplicate";
     				current->info.push_back(data);	//add record of player's year
     				isFound = true;
     				break;
@@ -292,54 +292,9 @@ void hashTable::chainingAdd (string filename)
     			current->next = person;
     			person->previous = current;
     		}
-
-
-    		/*
-    		person->info.push_back(data);
-    		current = table[hashcode]->next;	//reset pointer
-    		if (person->key > current->key && !isFound) //if player is alphabetically higher than the first node in the chain
-    		{
-    			searchCount++;
-    			table[hashcode]->next->previous = person;
-    			person->next = table[hashcode]->next;
-    			person->previous = table[hashcode];
-    			table[hashcode]->next = person;
-    			//isFound = true;
-    		}
-    		else
-    		{
-	    		while (current->next != nullptr)	//until the last node in the chain
-	    		{
-	    			searchCount++;
-	    			if (person->key > current->next->key) //if player should be inserted between the current node and the next node
-	    			{
-	    				current->next->previous = person;
-		    			person->next = current->next;
-		    			person->previous = current;
-		    			table[hashcode]->next = person;
-		    			isFound = true;
-		    			break;
-	    			}
-
-	    			current = current->next;
-	    		}
-
-	    		//player should be added after last node in the chains
-				if (!isFound)
-				{
-					current->next = person;
-					person->next = nullptr;
-					person->previous = current;
-				}
-			}
-
-		}
-	}
-
-	reader.close();
-    		}*/
     	}
     }
+
     cout << "Collisions using chaining: " << collisionCount << endl;
     cout << "Search operations using chaining: " << searchCount << endl;
     reader.close();
@@ -396,9 +351,11 @@ bool hashTable::chainingSearch ( std::string key )
 
 	// Convert key (format: "firstname lastname") to a key (format: "firstnamelastname")
 	string searchKey = getSearchKey(key);
+    cout << searchKey << endl;
 
 	// Search the table
 	int hashcode = hash(searchKey);
+    cout << hashcode << endl;
 	player* t = table[hashcode];
 	bool found = false;
 	while(!found)
@@ -434,13 +391,12 @@ std::string hashTable::getSearchKey(std::string key)
 	string first, last, searchKey;
 	getline(stream, first, ' ');
 	getline(stream, last);
-	searchKey = last + first;
+	searchKey = first + last;
 	return searchKey;
 }
 
 void hashTable::printPlayerInfo(player* p)
 {
-	// TODO
 	cout << "First name: " << p->first << endl;
 	cout << "Last name: " << p->last << endl;
 	cout << "Year born: " << p->yearBorn << endl;
