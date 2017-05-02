@@ -19,17 +19,16 @@ int main (int argc, char* argv[])
 	string tSize(ts);
 	int tableSize;
 	stringstream(tSize)>>tableSize;
-	cout << tableSize << endl;
+	//cout << tableSize << endl;
 
 	hashTable addressing(tableSize);
 	hashTable chaining(tableSize);
 
-	cout << "Hash table size: " << tableSize << endl;
+	//cout << "Hash table size: " << tableSize << endl;
 	chaining.chainingAdd(filename);
-	chaining.chainingSearch("Len Barker");
-	//chaining.chainingAdd(filename);
+	addressing.addressingAdd(filename);
 
-	/*int answer = 0;
+	int answer = 0;
 	string playerName;
 
 	while (answer != 2)
@@ -42,6 +41,7 @@ int main (int argc, char* argv[])
         switch (answer)
         {
             case 1:
+            {
             	cin.ignore();
                 std::cout << "Enter a player:" << std::endl;
                 getline (std::cin, playerName);
@@ -49,11 +49,19 @@ int main (int argc, char* argv[])
                 if (found)
                 	addressing.addressingSearch(playerName);
                 break;
+            }
             case 2: 
+            {
                 answer = 2;
                 break;
+            }
+            default:
+            {
+            	answer = 2;
+            	break;
+            }
         }
-    }*/
+    }
 
     return 0;
 }

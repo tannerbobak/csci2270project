@@ -233,7 +233,7 @@ void hashTable::chainingAdd (string filename)
     	
     	//Now that the player's information has all been logged, the insertion can begin. 
     	int hashcode = hash(person->key);
-        cout << hashcode << endl;
+        //cout << hashcode << endl;
 
     	player *current = table[hashcode];
     	if (current == nullptr)	//nothing in spot
@@ -334,7 +334,7 @@ bool hashTable::chainingSearch (std::string key)
 
 	// Search the table
 	int hashcode = hash(searchKey);    //generate hash
-    cout << hashcode << endl;
+    //cout << hashcode << endl;
 	player* t = table[hashcode];   
 	bool found = false;
 
