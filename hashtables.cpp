@@ -36,8 +36,6 @@ int hashTable::hash(string name)
 	return sum;
 }
 
-//TODO: test this 
-//TODO: add counters, output statements
 void hashTable::addressingAdd(string filename)
 {
 	ifstream reader;
@@ -180,7 +178,6 @@ void hashTable::addressingAdd(string filename)
     cout << "Collisions using open addressing: " << collisionCount << endl;
     cout << "Search operations using open addressing: " << searchCount << endl;
 
->>>>>>> insertion
 }
 
 //TODO: Test this
