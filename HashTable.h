@@ -4,13 +4,13 @@
  * CSCI 2270 Project
  */
 
-#ifndef HASHTABLES_H
-#define HASHTABLES_H
+#ifndef HASHTABLE_H
+#define HASHTABLE_H
 #include <vector>
 #include <string>
 
-// Struct for holding player data for both chaining and addressing tables.
-struct player
+// Structure for holding player data for both chaining and addressing tables.
+struct Player
 {
 	// Basic player data retrieved from file.
 	std::string key; 							// Key used in the table.
@@ -25,19 +25,30 @@ struct player
 	std::vector <std::string> info;				// This will hold strings with data on year, league, team, and salary.
 
 	// Variables used for chaining only.
-	player *next;
-	player *previous;
+	Player *next;
+	Player *previous;
 
-	player ()
+	// Basic constructor with default values.
+	Player ()
 	{
-		player("","","",-1,-1,-1,"","");
+		first = "";
+		last = "";
+		key = "";
+		countryBorn = "";
+		yearBorn = -1;
+		weight = -1;
+		height = -1;
+		bats = "";
+		throws = "";
+		next = nullptr;
+		previous = nullptr;
 	}
 
-	player (std::string f, std::string l, std::string cB, int y, int w, int h, std::string b, std::string t)
+	// Polymorphic constructor with parameters for values.
+	Player (std::string f, std::string l, std::string cB, int y, int w, int h, std::string b, std::string t)
 	{
 		first = f;
 		last = l;
-		key = "";
 		key = first + last;
 		countryBorn = cB;
 		yearBorn = y;
@@ -48,6 +59,14 @@ struct player
 		next = nullptr;
 		previous = nullptr;
 	}
+
+	// Deconstructor calls delete on the next item if it is chained.
+	~Player() {
+		if(next != nullptr)
+		{
+			delete next;
+		}
+	}
 };
 
 /*
@@ -56,12 +75,12 @@ struct player
  * other for any given instance of the class), but if you think it would be
  * better to create two separate classes we can make that work too
  */
-class hashTable
+class HashTable
 {
 
 	public:
-		hashTable(int size);
-		~hashTable();
+		HashTable(int size);
+		~HashTable();
 		void addressingAdd (std::string filename );
 		void chainingAdd (std::string filename );
 		void addressingSearch( std::string key );
@@ -70,11 +89,11 @@ class hashTable
 
 	private:
 		int tableSize;
-		player ** table;
+		Player ** table;
 		std::string getSearchKey(std::string key);
-		void printPlayerInfo(player* p);
+		void printPlayerInfo(Player* p);
 		std::string generateInfoString(int year, std::string team, std::string league, int salary);
 
 };
 
-#endif // HASHTABLES_H
+#endif // HASHTABLE_H

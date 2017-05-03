@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "hashtables.h"
+#include "HashTable.h"
 
 using namespace std;
 
@@ -33,9 +33,12 @@ int main (int argc, char* argv[])
 	int tableSize;
 	stringstream(tSize)>>tableSize;
 
+	// Print the hash table size.
+	cout << "Hash table size: " << tableSize << endl;
+
 	// Create two tables. One table uses open addressing, the other chaining in the event of collisions.
-	hashTable addressing(tableSize);
-	hashTable chaining(tableSize);
+	HashTable addressing(tableSize);
+	HashTable chaining(tableSize);
 
 	/*
 	 * These methods build each hash table from the database file. The first builds using chaining, the second
