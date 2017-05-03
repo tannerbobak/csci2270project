@@ -329,6 +329,7 @@ void HashTable::chainingAdd (string filename)
 				if (current->key == person->key && current->yearBorn == person->yearBorn &&
 					current->countryBorn == person->countryBorn && current->weight == person->weight)
     			{
+    				cout << "duplicate found" << endl;
     				current->info.push_back(data);	//add record of player's year
     				isFound = true;
     				break;
