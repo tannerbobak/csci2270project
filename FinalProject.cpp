@@ -61,16 +61,15 @@ int main (int argc, char* argv[])
 		cout << "2. Quit" << endl;
 
 		// Get the answer from std::cin and extract to the answer variable.
-        cin >> answer;
+		string ansStr;
+        getline(cin, ansStr);
+        stringstream(ansStr) >> answer;
 
         // Switch depending on the answer provided by the user.
         switch (answer)
         {
             case 1: // Query the hash table for a certain player.
             {
-            	// Ignore the new line character from when the answer was retrieved.
-            	cin.ignore();
-
             	// Prompt the user for a player name (format: "firstname lastname")
                 std::cout << "Enter a player:" << std::endl;
 
@@ -100,9 +99,6 @@ int main (int argc, char* argv[])
             }
             default: // Some kind of gibberish was entered.
             {
-            	// Ignore the new line
-            	cin.ignore();
-
             	// Set answer to zero so the main menu will run again.
             	answer = 0;
 
