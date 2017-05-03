@@ -320,6 +320,8 @@ void HashTable::chainingAdd (string filename)
     		bool isFound = false; // Tracks if a matching player is already found in the table
 
     		//Search through chain to make sure the player isn't already in the table.
+    		
+
     		while (current->next != nullptr)
     		{
     			++searchCount; // Increment search count.
@@ -329,7 +331,6 @@ void HashTable::chainingAdd (string filename)
 				if (current->key == person->key && current->yearBorn == person->yearBorn &&
 					current->countryBorn == person->countryBorn && current->weight == person->weight)
     			{
-    				cout << "duplicate found" << endl;
     				current->info.push_back(data);	//add record of player's year
     				isFound = true;
     				break;
@@ -422,7 +423,6 @@ bool HashTable::chainingSearch (std::string key)
 
 	// Search the table
 	int hashcode = hash(searchKey);    //generate hash
-    //cout << hashcode << endl;
 	Player* t = table[hashcode];
 	bool found = false;
 
