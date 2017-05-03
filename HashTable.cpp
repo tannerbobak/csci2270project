@@ -303,6 +303,7 @@ void HashTable::chainingAdd (string filename)
 
 		// Making a string of information to be added to the player's info vector.
 		string data = generateInfoString(year, team, league, salary);
+		person->info.push_back(data);
 
 		//Now that the player's information has all been logged, the table insertion can begin.
 		int hashcode = hash(person->key);
@@ -311,7 +312,6 @@ void HashTable::chainingAdd (string filename)
     	Player *current = table[hashcode];
     	if (current == nullptr)	// If there is nothing in the table where the player hashes to, just add it.
     	{
-    		person->info.push_back(data);
     		table[hashcode] = person;
     	}
     	else // There is at least one node in spot, we will have to chain
@@ -320,9 +320,7 @@ void HashTable::chainingAdd (string filename)
     		bool isFound = false; // Tracks if a matching player is already found in the table
 
     		//Search through chain to make sure the player isn't already in the table.
-    		
-
-    		while (current->next != nullptr)
+    		while (current != nullptr)
     		{
     			++searchCount; // Increment search count.
 
@@ -331,20 +329,22 @@ void HashTable::chainingAdd (string filename)
 				if (current->key == person->key && current->yearBorn == person->yearBorn &&
 					current->countryBorn == person->countryBorn && current->weight == person->weight)
     			{
-    				current->info.push_back(data);	//add record of player's year
+					current->info.push_back(data);	// Add record of player's year to found location
     				isFound = true;
     				break;
     			}
 
 				// Move to the next element in the chain.
-    			current = current->next;
+				if(current->next != nullptr)
+					current = current->next;
+				else
+					break;
+
     		}
 
     		//If the player isn't already in the chain, add them to the end
     		if (!isFound)
     		{
-    			person->info.push_back(data);
-
     			// Add player to end of linked list.
     			current->next = person;
     			person->previous = current;
