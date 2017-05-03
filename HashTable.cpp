@@ -34,12 +34,15 @@ HashTable::~HashTable()
  */
 int HashTable::hash(string name)
 {
-	int sum = 0;
-	for (int x = 0; x < name.size(); x++)
-		sum += name[x];
+	char* str = (char*) name.c_str();
+	unsigned long hash = 0;
+	int c;
 
-	sum = sum%tableSize;
-	return sum;
+	while (c = *str++)
+	    hash = c + (hash << 6) + (hash << 16) - hash;
+
+	hash = hash%tableSize;
+	return hash;
 }
 
 /*
