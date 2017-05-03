@@ -73,7 +73,7 @@ void HashTable::addressingAdd(string filename)
 	int collisionCount = 0;
 	int searchCount = 0;
 
-	// Read in the data from the report line-by-line.
+	// Read in the data from the file line-by-line.
 	string templine;
     getline (reader, templine);	// The first line will be descriptions of categories. Discard.
 
@@ -181,7 +181,7 @@ void HashTable::addressingAdd(string filename)
     				cout << "Table is full" << endl;
     				break;
     			}
-    			else // Niether at the end nor full, then increment the index to check.
+    			else // Neither at the end nor full, then increment the index.
     			{
     				current++;
     			}
@@ -205,7 +205,17 @@ void HashTable::addressingAdd(string filename)
 
 }
 
-
+/*
+ * Adds the players contained in the given database file to the hash table using
+ * chaining.
+ *
+ * Preconditions:
+ * - "string filename" represents a file name to read from. If it is not valid,
+ *   the function will exit.
+ *
+ * Post-conditions:
+ * - The table will be populated from the given data using chaining.
+ */
 void HashTable::chainingAdd (string filename)
 {
 	// Open the file
@@ -346,7 +356,6 @@ void HashTable::chainingAdd (string filename)
 
     // Close file reader.
     reader.close();
-
 }
 
 /*
@@ -475,6 +484,10 @@ void HashTable::printPlayerInfo(Player* p)
 		cout << p->info[i] << endl;
 }
 
+/* 
+* This function concatentates various attributes of the player into an information
+* string which will be stored in the player's info vector.
+*/
 string HashTable::generateInfoString(int year, std::string team, std::string league, int salary)
 {
 	return std::to_string(year) + "," + team + "," + league + "," + std::to_string(salary);
